@@ -5,3 +5,4 @@ The goal of this framework is to be an educational framework. This may become th
 ## Requirements
 
 PHP 5.3+
+Zend_Framework 1.11.11
