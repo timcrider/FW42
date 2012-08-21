@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit backupGlobals="false"
+		 backupStaticAttributes="false"
+		 bootstrap="./environment.php"
+		 convertErrorsToExceptions="true"
+		 convertNoticesToExceptions="true"
+		 convertWarningsToExceptions="true"
+		 processIsolation="false"
+		 stopOnFailure="false"
+		 syntaxCheck="true"
+		 strict="true"
+		 colors="true">
+	<testsuites>
+		<testsuite name="Example Test Suite">
+			<directory suffix="Test.php">./tests</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<blacklist>
+			<file>./environment.php</file>
+			<directory>./tests</directory>
+		</blacklist>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory>./tests</directory>
+		</whitelist>
+	</filter>
+</phpunit>

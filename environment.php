@@ -24,7 +24,8 @@ define('BASEDIR', dirname(__FILE__).'/');
 // Pathing
 $pathing = array(
 	BASEDIR.'src/',
-	BASEDIR.'vendor/ZendFramework-1.11.11/library/'
+	BASEDIR.'vendor/ZendFramework-1.11.11/library/',
+	BASEDIR.'vendor/PEAR/'
 );
 
 $sep = (!defined('PHP_OS') || !preg_match('/^WIN/', PHP_OS)) ? ':' : ';';
@@ -64,18 +65,14 @@ try {
 		);
 		
 		Zend_Db_Table_Abstract::setDefaultAdapter($reg->db);
+
 	} catch (Exception $e) {
 		print "Unable to connect to database: ".$e->getMessage()."\n";
 		exit(1);
 	}
 
-
-
 	// Register events
 	require_once BASEDIR.'config/events.php';
-
-
-
 } catch (Exception $e) {
 	print "Error loading environment: ".$e->getMessage()."\n";
 	exit(1);
