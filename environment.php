@@ -30,6 +30,14 @@ $pathing = array(
 $sep = (!defined('PHP_OS') || !preg_match('/^WIN/', PHP_OS)) ? ':' : ';';
 ini_set('include_path', implode($sep, $pathing));
 
+// Configuration File
+$tryConfigFile = BASEDIR.'config/configuration.php';
+
+if (!file_exists($tryConfigFile) || !is_readable($tryConfigFile)) {
+	print "Unable to load configuration file '{$tryConfigFile}'.\n";
+	exit(1);
+}
+
 try {
 	if (!file_exists(BASEDIR.'vendor/ZendFramework-1.11.11/library/Zend/Loader/Autoloader.php')) {
 		throw new Exception("Unable to find Zend_Autoloader");
@@ -39,8 +47,34 @@ try {
 	$autoloader = Zend_Loader_Autoloader::getInstance();
 	$autoloader->setFallbackAutoloader(true);
 
+	// Setup global registry
+	$reg = Zend_Registry::getInstance();
+
+	// Load configuration
+	$config = new FW42_Base;
+	require_once $tryConfigFile;
+	$reg->config = $config;
+
+	// Database connection
+	try {
+		$reg->db = Zend_Db::factory(
+			$config->database['adapter'],
+			$config->database['connection'],
+			$config->database['options']
+		);
+		
+		Zend_Db_Table_Abstract::setDefaultAdapter($reg->db);
+	} catch (Exception $e) {
+		print "Unable to connect to database: ".$e->getMessage()."\n";
+		exit(1);
+	}
+
+
+
 	// Register events
 	require_once BASEDIR.'config/events.php';
+
+
 
 } catch (Exception $e) {
 	print "Error loading environment: ".$e->getMessage()."\n";
