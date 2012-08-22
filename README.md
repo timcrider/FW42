@@ -4,9 +4,9 @@ The goal of this framework is to be an educational framework. This may become th
 
 ## Requirements
 
-PHP 5.3+
-Zend_Framework 1.11.11
-PHPUnit 3.6.12
+* PHP 5.3+
+* Zend_Framework 1.11.11
+* PHPUnit 3.6.12
 
 ## Setup
 
