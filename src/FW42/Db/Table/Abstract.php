@@ -34,7 +34,6 @@ abstract class FW42_Db_Table_Abstract extends Zend_Db_Table_Abstract {
 		parent::__construct($config);
 		
 		$this->backupTableExists();
-		
 	}
 	
 	/**

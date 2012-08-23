@@ -31,15 +31,18 @@ try {
 		}
 		
 		// Try to create the object and test for backup table
-		$obj = new $objName;
-		if (!$obj->backupTableExists()) {
-			$obj->createBackupTable();
-			print "     -> Creating Backup Table\n";
+		try {
+			$obj = new $objName;
+			if (!$obj->backupTableExists()) {
+				$obj->createBackupTable();
+				print "     -> Creating Backup Table\n";
+			}
+		} catch (Exception $e) {
+			print "    -> Error Creating Backup Table: ".$e->getMessage()."\n";
 		}
-		
 	}
 
-	print "!!!!!!!!!! REMEMBER TO COMMIT YOUR NEW MODELS TO VERSION CONTROL !!!!!!!!\n";
+	print "\n!!!!!!!!!! REMEMBER TO COMMIT YOUR NEW MODELS TO VERSION CONTROL !!!!!!!!\n\n";
 
 
 	print str_repeat('-', 30)."\nProcess Complete\n";

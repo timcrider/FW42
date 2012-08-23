@@ -72,8 +72,6 @@ class FW42_Db_Helper {
 			throw new Exception("Cannot create a model for a table without a primary key");
 		}
 
-		print "Trying: {$tableName}\n";
-
 		// Generate the classname and start our model object		
 		$className = ($options->className) ? $options->className : "Model_".ucfirst($tableName);
 
