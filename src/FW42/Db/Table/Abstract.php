@@ -96,6 +96,10 @@ abstract class FW42_Db_Table_Abstract extends Zend_Db_Table_Abstract {
 		$backupStack  = array();
 		
 		for ($i = 0; $i < $stackCount; $i++) {
+			if (preg_match('/^(CONSTRAINT|KEY)/', trim($createStack[$i]))) {
+				continue;
+			}
+			
 			if ($i == 0) {
 				$backupStack[] = preg_replace("/".preg_quote($tableSQL)."/", $backupTable, $createStack[$i]);
 				
@@ -127,7 +131,12 @@ abstract class FW42_Db_Table_Abstract extends Zend_Db_Table_Abstract {
 			} else {
 				$line = trim($createStack[$i]);
 				
-				if (preg_match('/^\)/', $line)) {
+				if ($line == '') {
+					continue;
+				} elseif (preg_match('/^\)/', $line)) {
+					$tmp = array_pop($backupStack);
+					$tmp = preg_replace('/,$/', '', trim($tmp));
+					$backupStack[] = $tmp;
 					$backupStack[] = $line;
 				} else {
 					$backupStack[] = "\t".$line;
@@ -151,9 +160,8 @@ abstract class FW42_Db_Table_Abstract extends Zend_Db_Table_Abstract {
 		}
 	
 		$sql = $this->generateBackupTableSQL($backupTable);
-
 		$db  = $this->getAdapter();
-		
+
 		$db->query($sql);
 		
 		return true;

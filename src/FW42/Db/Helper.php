@@ -72,6 +72,8 @@ class FW42_Db_Helper {
 			throw new Exception("Cannot create a model for a table without a primary key");
 		}
 
+		print "Trying: {$tableName}\n";
+
 		// Generate the classname and start our model object		
 		$className = ($options->className) ? $options->className : "Model_".ucfirst($tableName);
 
@@ -197,7 +199,7 @@ class FW42_Db_Helper {
 			return false;
 		}
 		
-		$tableName = preg_replace('/_/', '/', $table);
+		$tableName = preg_replace('/ /', '/', ucwords(preg_replace('/_/', ' ', $table)));
 		$modelFull = BASEDIR."src/Model/{$tableName}.php";
 		$modelDir  = dirname($modelFull);
 		
