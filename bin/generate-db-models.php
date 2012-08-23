@@ -42,7 +42,7 @@ try {
 		}
 	}
 
-	print "\n!!!!!!!!!! REMEMBER TO COMMIT YOUR NEW MODELS TO VERSION CONTROL !!!!!!!!\n\n";
+	print "\n!!!!!!!!!! REMEMBER TO COMMIT YOUR NEW MODELS TO VERSION CONTROL !!!!!!!!\n\n";
 
 
 	print str_repeat('-', 30)."\nProcess Complete\n";
